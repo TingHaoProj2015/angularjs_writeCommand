@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="test">
+<head>
+  <style>
+.ng-invalid.ng-dirty {
+border-color: #FA787E;
+}
+
+  </style>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+<script src="first1.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+<body>
+  
+  <div ng-controller="StoreController as store">
+  <li class="list-group-item" ng-repeat="product in store.products">
+    <h4> {{product.name}}  {{product.price|currency}}</h4>
+    <p>{{product.description}}</p>
+   
+    
+    <h4> Reviews </h4>
+    <blockquote ng-repeat="review in product.reviews">
+    <b>Stars: {{review.stars}}</b>
+    {{review.body}}
+    <cite>by: {{review.author}}</cite>
+    </blockquote>
+     <button ng-click="store.setWrite($index)">寫評論</button>
+    <hr>
+    <div ng-show="store.onwrite===($index)">
+      <form name="reviewForm" ng-controller="ReviewController as reviewCtrl"  ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
+    <blockquote>
+      <p>Stars: {{reviewCtrl.review.stars}}</p>
+      <p>Comment:{{reviewCtrl.review.body}}</p>
+      <cite>by: {{reviewCtrl.review.author}}</cite>
+    </blockquote>
+    
+    
+  <hr>
+  Stars
+  <select ng-model="reviewCtrl.review.stars" required>
+  <option value="1">1 star</option>
+  <option value="2">2 stars</option>
+  </select>
+    <br>
+  Comment<textarea ng-model="reviewCtrl.review.body" required></textarea>
+   <br>
+    email
+  <input ng-model="reviewCtrl.review.author" type="email" required class="ng-dirty ng-invalid"/>
+    <br>
+        
+    <div> reviewForm is {{reviewForm.$valid}} </div>    
+    <input type="submit" value="Submit" />
+    </form>
+    </div>
+    
+    
+    
+  </li>
+    
+    
+    
+  </div>
+    
+    
+
+</body>
+</html>
